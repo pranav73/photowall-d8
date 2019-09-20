@@ -19,10 +19,8 @@ function photowall_preprocess_photowall(&$variables) {
   $photowall = [];
   $photowall_items = array_reverse($variables['items']->getValue());
   foreach ($photowall_items as $num => $item) {
-    ksm($item);
     // Generate ids.
     $id = 'photowall-' . ($num + 1);
-    ksm($id);
     // Get image data.
     $file = File::load($item['target_id']);
     if ($field_type == 'image') {
@@ -55,7 +53,6 @@ function photowall_preprocess_photowall(&$variables) {
         'zoom_factor' => $variables['zoom_factor'],
       ],
     ];
-    // ksm($photowall);
     // Attached photowall data to drupalSettings.
     $variables['#attached']['drupalSettings']['settings']['photowall'] = $photowall;
   }
