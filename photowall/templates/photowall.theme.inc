@@ -15,7 +15,6 @@ function photowall_preprocess_photowall(&$variables) {
   $variables['#attached']['library'][] = 'photowall/photowall.local';
   $variables['#attached']['library'][] = 'photowall/jquery-photowall';
   $field_type = $variables['field_type'];
-
   $photowall = [];
   $photowall_items = array_reverse($variables['items']->getValue());
   foreach ($photowall_items as $num => $item) {
@@ -23,11 +22,8 @@ function photowall_preprocess_photowall(&$variables) {
     $id = 'photowall-' . ($num + 1);
     // Get image data.
     $file = File::load($item['target_id']);
-    if ($field_type == 'image') {
+    if (!empty($file)) {
       $image['path'] = file_create_url($file->getFileUri());
-    }
-    if ($field_type == 'media') {
-      // $image['path'] = file_create_url($file->getFileUri());
     }
 
     if (isset($item['width']) && isset($item['height'])) {
@@ -46,7 +42,7 @@ function photowall_preprocess_photowall(&$variables) {
       'width' => $image['width'],
       'height' => $image['height'],
       'th' => [
-        'src' => $image['path'], //Source image for Photowall thumbnails.
+        'src' => $image['path'], // Source image for Photowall thumbnails.
         'width' => $image['width'],
         'height' => $image['height'],
         'zoom_src' => '',
@@ -55,5 +51,7 @@ function photowall_preprocess_photowall(&$variables) {
     ];
     // Attached photowall data to drupalSettings.
     $variables['#attached']['drupalSettings']['settings']['photowall'] = $photowall;
+    $variables['#attached']['drupalSettings']['settings']['entity_id'] = $variables['entity_id'];
+    $variables['#attached']['drupalSettings']['settings']['entity_type'] = $variables['entity_type'];
   }
 }

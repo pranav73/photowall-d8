@@ -140,9 +140,10 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
         '#items' => $items,
         '#zoom_factor' => $zoom_factor,
         '#field_type' => $items->getFieldDefinition()->getType(),
+        '#entity_type' => $items->getEntity()->bundle(),
+        '#entity_id' => $items->getEntity()->id(),
       ];
     }
-
     // Attach the photowall show library.
     $elements['#attached']['library'][] = 'photowall/jquery-photowall';
     $elements['#attached']['library'][] = 'photowall/photowall.local';

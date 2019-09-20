@@ -37,7 +37,8 @@ function photowall_theme() {
       'variables' => [
         'items' => NULL,
         'zoom_factor' => NULL,
-        'field_type' => NULL,
+        'entity_type' => NULL,
+        'entity_id' => NULL,
       ],
       'template' => 'photowall',
       'file' => 'templates/photowall.theme.inc',
