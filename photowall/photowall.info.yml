@@ -1,0 +1,12 @@
+name: Photowall
+type: module
+description: 'Provides image formatter for Google like photowall effect.'
+package: Media
+dependencies:
+  - image
+  - libraries
+
+# Information added by Drupal.org packaging script on 2019-09-17
+version: '8.x-1.0'
+core: '8.x'
+project: 'juicebox'

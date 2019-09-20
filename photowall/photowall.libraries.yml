@@ -1,0 +1,16 @@
+jquery-photowall:
+  title: 'Jquery Photowall'
+  js:
+    /libraries/jquery-photowall/lib/jquery-photowall.js: {}
+photowall.local:
+  title: 'Photowall Local Load'
+  js:
+    js/photowall.js: {}
+  css:
+    theme:
+      css/photowall.css: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
