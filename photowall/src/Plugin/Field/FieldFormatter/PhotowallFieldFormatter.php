@@ -10,6 +10,8 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\file\Entity\File;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Plugin implementation of the 'photowall_field_formatter' formatter.
@@ -134,16 +136,56 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
     if (!isset($zoom_factor)) {
       $zoom_factor = '1.5';
     }
-    if (count($items)) {
-      $elements[] = [
-        '#theme' => 'photowall',
-        '#items' => $items,
-        '#zoom_factor' => $zoom_factor,
-        '#field_type' => $items->getFieldDefinition()->getType(),
-        '#entity_type' => $items->getEntity()->bundle(),
-        '#entity_id' => $items->getEntity()->id(),
+    $photowall = [];
+    $photowall_options = [];
+    $photowall_items = array_reverse($items->getValue());
+    foreach ($photowall_items as $num => $item) {
+      // Generate ids.
+      $id = 'photowall-' . ($num + 1);
+      // Get image data.
+      $file = File::load($item['target_id']);
+      if (!empty($file)) {
+        $image['path'] = file_create_url($file->getFileUri());
+      }
+
+      if (isset($item['width']) && isset($item['height'])) {
+        $image['width'] = $item['width'];
+        $image['height'] = $item['height'];
+      }
+      else {
+        $image_dims = getimagesize($image['path']);
+        $image['width'] = $image_dims[0];
+        $image['height'] = $image_dims[1];
+      }
+      // The height and width will be adjusted by photowall plugin itself.
+      $photowall[$id] = [
+        'id' => $id,
+        'img' => $image['path'], // Source image for Showbox.
+        'width' => $image['width'],
+        'height' => $image['height'],
+        'th' => [
+          'src' => $image['path'], // Source image for Photowall thumbnails.
+          'width' => trim($image['width'], ""),
+          'height' => trim($image['height'], ""),
+          'zoom_src' => '',
+          'zoom_factor' => $zoom_factor,
+        ],
       ];
     }
+    if($items->getValue()[0]['target_id'] != NULL) {
+      $photowall_options = [
+        'zoom_factor' => $zoom_factor,
+        'entity_type' => $items->getEntity()->bundle(),
+        'entity_id' => $items->getEntity()->id(),
+        'target_id' => $items->getValue()[0]['target_id'],
+      ];
+    }
+
+    $elements[] = [
+      '#theme' => 'photowall',
+      '#photowall_settings' => Json::encode($photowall),
+      '#photowall_options' => Json::encode($photowall_options),
+    ];
     // Attach the photowall show library.
     $elements['#attached']['library'][] = 'photowall/jquery-photowall';
     $elements['#attached']['library'][] = 'photowall/photowall.local';
