@@ -5,6 +5,7 @@
  * Photowall module file.
  */
 
+use Drupal\Core\Url;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -18,7 +19,7 @@ function photowall_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Provides a <em>Photowall</em> format for displaying <em>Image</em> or <em>Media</em> field, using JQuery <a href="@photowall">Photowall</a> plugin.', ['@photowall' => 'https://github.com/tanmayk/jquery-photowall']) . '</p>';
       $output .= '<h3>' . t('Usage') . '</h3>';
-      $output .= '<p>' . t('Create or edit a <a href="@content_types">content type</a> and include an <em>Image</em> field. Edit this image field to make it so that multiple image files may be added ("Number of values" setting at @content_type_setting).', ['@content_types' => \Drupal\Core\Url::fromUri('base://admin/structure/types'), '@content_type_setting' => 'admin/structure/types/manage/{content type}/fields/{field_image/field_media}']) . '</p>';
+      $output .= '<p>' . t('Create or edit a <a href=":content-type">content type</a> and include an <em>Image</em> field. Edit this image field to make it so that multiple image files may be added ("Number of values" setting at :content_type_setting).', [':content-type' => Url::fromRoute('entity.node_type.collection')->toString(), ':content_type_setting' => 'admin/structure/types/manage/{content type}/fields/{field_image/field_media}']) . '</p>';
       $output .= '<p>' . t('Go to Manage display for your content type (/admin/structure/types/manage/{content type}/display) and switch the format of your multiple image/media field from Image to Photowall.') . '</p>';
       $output .= '<p>' . t('Click the settings wheel in the slideshow-formatted multiple image field to edit advanced settings.') . '</p>';
       $output .= '<p>' . t('Save! and here you go.') . '</p>';

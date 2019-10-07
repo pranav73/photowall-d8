@@ -172,7 +172,7 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
         ],
       ];
     }
-    if($items->getValue()[0]['target_id'] != NULL) {
+    if ($items->getValue()[0]['target_id'] != NULL) {
       $photowall_options = [
         'zoom_factor' => $zoom_factor,
         'entity_type' => $items->getEntity()->bundle(),
