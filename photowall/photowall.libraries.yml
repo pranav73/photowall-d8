@@ -1,14 +1,20 @@
-jquery-photowall:
-  title: 'Jquery Photowall'
+photowall:
+  remote: https://github.com/tanmayk/jquery-photowall
+  version: 0.1.5
+  license:
+    name: MIT
+    gpl-compatible: false
   js:
     /libraries/jquery-photowall/lib/jquery-photowall.js: {}
-photowall.local:
-  title: 'Photowall Local Load'
-  js:
-    js/photowall.js: {}
   css:
     theme:
-      css/photowall.css: {}
+      /libraries/jquery-photowall/lib/jquery-photowall.css: {}
+  dependencies:
+  - core/jquery
+  - core/jquery.once
+init:
+  js:
+    js/photowall.js: {}
   dependencies:
     - core/jquery
     - core/jquery.once

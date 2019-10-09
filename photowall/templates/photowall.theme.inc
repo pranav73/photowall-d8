@@ -12,8 +12,8 @@ use Drupal\Component\Serialization\Json;
  */
 function photowall_preprocess_photowall(&$variables) {
   // Add JQuery plugin and JS.
-  $variables['#attached']['library'][] = 'photowall/photowall.local';
-  $variables['#attached']['library'][] = 'photowall/jquery-photowall';
+  $variables['#attached']['library'][] = 'photowall/init';
+  $variables['#attached']['library'][] = 'photowall/photowall';
   // Set entity_type and entity_id to the variables.
   $entity_type = Json::decode($variables['photowall_options']);
   $variables['entity_type'] = $entity_type['entity_type'];

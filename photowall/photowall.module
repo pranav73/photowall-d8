@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Photowall module file.
+ * Provides image formatter for Google like photowall effect.
  */
 
 use Drupal\Core\Url;

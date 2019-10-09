@@ -2,5 +2,7 @@ name: Photowall
 type: module
 description: 'Provides image formatter for Google like photowall effect.'
 package: Media
+# core: 8.x
+
 dependencies:
   - image
