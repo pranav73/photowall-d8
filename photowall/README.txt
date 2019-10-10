@@ -14,7 +14,7 @@ A new version was developed [here](https://github.com/tanmayk/jquery-photowall) 
 * Install the module as normal, see link for instructions.
    Link: https://www.drupal.org/documentation/install/modules-themes/modules-8
 * Download the zip containing JQuery Photowall plugin from link below:
-   https://github.com/tanmayk/jquery-photowall/releases/tag/0.1.5
+   https://github.com/tanmayk/jquery-photowall/releases/tag/0.1.6
 * Put jquery-photowall library into /libraries folder so jquery-photowall.js
    can be found at /libraries/jquery-photowall/lib/jquery-photowall.js
 * You can remove unnecessary files from library. Only `lib` directory is
