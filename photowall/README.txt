@@ -1,48 +1,37 @@
-## INTRODUCTION
+--- README  -------------------------------------------------------------
 
-Provides a Photowall format for displaying Image field, using the
-JQuery Photowall plugin.
+Photowall
 
-The Photowall plugin was originally developed by Andrey Nikishaev (creotiv@gmail.com).
-But the plugin was no more maintained & was not supported by latest jQuery
-version. Old version is located [here](https://github.com/creotiv/jquery-photowall).
+Provides a Photowall format for displaying Image field, using the JQuery Photowall plugin.
 
-A new version was developed [here](https://github.com/tanmayk/jquery-photowall) which now works with latest jQuery.
+The Photowall plugin was originally developed from https://github.com/creotiv
 
-## INSTALLATION
 
-* Install the module as normal, see link for instructions.
-   Link: https://www.drupal.org/documentation/install/modules-themes/modules-8
-* Download the zip containing JQuery Photowall plugin from link below:
-   https://github.com/tanmayk/jquery-photowall/releases/tag/0.1.6
-* Put jquery-photowall library into /libraries folder so jquery-photowall.js
-   can be found at /libraries/jquery-photowall/lib/jquery-photowall.js
-* You can remove unnecessary files from library. Only `lib` directory is
-   important.
-* Go to "Administer" -> "Extend" and enable the Photowall module.
-* You should now see a new display formatter i.e. "Photowall" for image field,
-   under Manage display section of each content types.
+--- INSTALLATION --------------------------------------------------------
 
-## CONFIGURATION
+1 - Extract the module into /sites/all/modules directory.
 
-* Visit any image fields display settings, you will be able to find
-   the Photowall formatter.
-* Change the display formatter for image field to photowall.
-* Add a content & upload 1 or more images to the node and Save. On node view,
-   photowall effect will appear for an image field.
+2 - Download the zip containing JQuery Photowall plugin here : https://github.com/tanmayk/jquery-photowall
 
-## AVAILABLE OPTIONS
+3 - Put jquery-photowall folder into /sites/all/libraries folder. Photowall plugin file should be located at
+    /sites/all/libraries/jquery-photowall/jquery-photowall.js.
 
-* **Zoom Factor** : Set zoom factor between 1.3 to 1.6 for better results.
+--- USAGE ---------------------------------------------------------------
 
-## KNOWN ISSUE
+1 - Enable Photowall at /admin/modules, (Image, File, Field, Field SQL storage, Libraries required as well)
 
-* When there are more than one instances of photowall, only first instance
-   opens up image in photowall popup when image is clicked. For other
-   instances, image directly opens up in browser.
+2 - Create or edit a content type at /admin/structure/types and include an Image field. Edit this image field to make it so that multiple image files may be added ("Number of values" setting at admin/structure/types/manage/{content type}/fields/{field_image/field_media}).
 
-## MAINTAINERS
+3 - Go to "Manage display" for your content type (/admin/structure/types/manage/{content type}/display) and switch the format of your multiple image field from Image to Photowall.
 
-* [Tanmay Khedekar](https://www.drupal.org/u/tanmayk)
-* [Pranav Aeer](https://www.drupal.org/u/pranav73)
-* [Revati Gawas](https://www.drupal.org/u/revati_gawas)
+4 - Click the settings wheel in the slideshow-formatted multiple image/media field to edit advanced settings.
+
+5 - Save! and here you go.
+
+
+--- AVAILABLE OPTIONS ---------------------------------------------------
+
+Zoom Factor : Set zoom factor between 1.3 to 1.6 for better results.
+
+
+Written by: Tanmay Khedekar
