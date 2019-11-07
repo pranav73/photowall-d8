@@ -8,7 +8,7 @@
  * Implements hook_help().
  */
 function photowall_help($path, $arg) {
-  switch($path) {
+  switch ($path) {
     case 'admin/help#photowall':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
@@ -121,7 +121,7 @@ function photowall_field_formatter_view($entity_type, $entity, $field, $instance
   if (module_exists('libraries')) {
     $path = libraries_get_path('jquery-photowall');
   }
-  if (!file_exists($path . '/jquery-photowall.js')) {
+  if (!file_exists($path . '/lib/jquery-photowall.js')) {
     drupal_set_message(t('JQuery Photowall must be installed'), 'warning', FALSE);
   }
 

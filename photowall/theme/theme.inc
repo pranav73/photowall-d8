@@ -8,13 +8,12 @@
  * Template preprocess handler for 'photowall' theme.
  */
 function template_preprocess_photowall(&$variables) {
-
-  //Add CSS.
+  // Add CSS.
   drupal_add_css(drupal_get_path('module', 'photowall') . '/css/photowall.css');
 
-  //Add JQuery plugin and JS.
+  // Add JQuery plugin and JS.
   $path = libraries_get_path('jquery-photowall');
-  drupal_add_js($path . '/jquery-photowall.js');
+  drupal_add_js($path . '/lib/jquery-photowall.js');
   drupal_add_js(drupal_get_path('module', 'photowall') . '/js/photowall.js');
 
   $field_type = $variables['field_type'];
@@ -23,7 +22,7 @@ function template_preprocess_photowall(&$variables) {
   $variables['items'] = array_reverse($variables['items']);
   foreach ($variables['items'] as $num => $item) {
 
-    //Generate ids
+    // Generate ids.
     $id = 'photowall-' . ($num + 1);
 
     if ($field_type == 'image') {
@@ -48,7 +47,7 @@ function template_preprocess_photowall(&$variables) {
     // The height and width will be adjusted by photowall plugin itself.
     $photowall[$id] = array(
       'id' => $id,
-      'img' => $variables['items'][$num]['image_src'],  //Source image for Showbox.
+      'img' => $variables['items'][$num]['image_src'],  // Source image for Showbox.
       'width' => $image['width'],
       'height' => $image['height'],
       'th' => array(
@@ -75,7 +74,7 @@ function theme_views_view_photowall($vars) {
   // Prepare items for our theme.
   foreach ($vars['rows'] as $row) {
     $lang = $row->_field_data[$view->base_field]['entity']->language;
-    // omit rows without image field.
+    // Omit rows without image field.
     if (!isset($row->_field_data[$view->base_field]['entity']->{$img_field_name})) {
       continue;
     }

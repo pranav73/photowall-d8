@@ -18,7 +18,7 @@ function photowall_requirements($phase) {
     if (module_exists('libraries'))
       $path = libraries_get_path('jquery-photowall');
     else
-      $path = '/sites/all/libraries/jquery-photowall';
+      $path = '/sites/all/libraries/jquery-photowall/lib';
     if (file_exists($path . '/jquery-photowall.js')) {
       $requirements['photowall_plugin'] = array(
         'title' => $t('JQuery Photowall plugin'),

@@ -11,10 +11,10 @@ The Photowall plugin was originally developed from https://github.com/creotiv
 
 1 - Extract the module into /sites/all/modules directory.
 
-2 - Download the zip containing JQuery Photowall plugin here : https://github.com/tanmayk/jquery-photowall
+2 - Download the zip containing JQuery Photowall plugin here : https://github.com/tanmayk/jquery-photowall/tree/dev
 
 3 - Put jquery-photowall folder into /sites/all/libraries folder. Photowall plugin file should be located at
-    /sites/all/libraries/jquery-photowall/jquery-photowall.js.
+    /sites/all/libraries/jquery-photowall/lib/jquery-photowall.js.
 
 --- USAGE ---------------------------------------------------------------
 
