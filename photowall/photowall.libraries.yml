@@ -3,12 +3,13 @@ photowall:
   version: 0.1.6
   license:
     name: MIT
+    url: lib/MIT-LICENSE.txt
     gpl-compatible: false
   js:
-    /libraries/jquery-photowall/lib/jquery-photowall.js: {}
+    lib/jquery-photowall.js: {}
   css:
     theme:
-      /libraries/jquery-photowall/lib/jquery-photowall.css: {}
+      lib/jquery-photowall.css : {}
   dependencies:
   - core/jquery
   - core/jquery.once
