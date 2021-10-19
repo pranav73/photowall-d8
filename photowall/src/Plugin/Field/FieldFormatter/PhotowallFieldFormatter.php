@@ -11,7 +11,7 @@ use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\file\Entity\File;
 use Drupal\Component\Serialization\Json;
-// use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface; # New Import.
 
 /**
  * Plugin implementation of the 'photowall_field_formatter' formatter.
@@ -70,8 +70,8 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('entity_type.manager')->getStorage('user')
-      // $container->get('entity.manager')->getStorage('image_style')
+      $container->get('entity_type.manager')->getStorage('user') # Added
+      // $container->get('entity.manager')->getStorage('image_style')   # Removed
     );
   }
 
