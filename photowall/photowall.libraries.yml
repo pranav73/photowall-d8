@@ -1,10 +1,4 @@
 photowall:
-  remote: https://github.com/tanmayk/jquery-photowall
-  version: 0.1.6
-  license:
-    name: MIT
-    url: lib/MIT-LICENSE.txt
-    gpl-compatible: false
   js:
     lib/jquery-photowall.js: {}
   css:

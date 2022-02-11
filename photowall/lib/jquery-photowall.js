@@ -347,7 +347,7 @@ var PhotoWall = {
         }
       };
     }
-    ShowBox.init(PhotoWall._el + ' a.pw-link', {
+    ShowBox.init(PhotoWall.options.classes + ' a.pw-link', {
       closeCallback: function() {
         if (PhotoWall._must_resize) {
           PhotoWall.RESIZE();

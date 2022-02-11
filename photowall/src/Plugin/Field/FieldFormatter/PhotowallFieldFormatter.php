@@ -90,12 +90,12 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $element['zoom_factor'] = [
-      '#title' => t('Zoom factor'),
+      '#title' => $this->t('Zoom factor'),
       '#type' => 'number',
       '#step' => 'any',
       '#default_value' => $this->getSetting('zoom_factor'),
       '#required' => TRUE,
-      '#description' => t('Enter value between 1.3 to 1.6 for better results.'),
+      '#description' => $this->t('Enter value between 1.3 to 1.6 for better results.'),
     ];
 
     return $element;
@@ -176,7 +176,7 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
         'target_id' => $items->getValue()[0]['target_id'],
       ];
     }
-
+// kint($photowall);
     $elements[] = [
       '#theme' => 'photowall',
       '#photowall_settings' => Json::encode($photowall),
