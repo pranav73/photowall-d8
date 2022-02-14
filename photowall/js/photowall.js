@@ -28,7 +28,7 @@
 
         // Prepare element selector.
         var el = '.photowall-' + photowallOptions.entity_type + '-' + photowallOptions.entity_id + '-' + photowallOptions.target_id;
-        var classes = '.photowall-' + photowallOptions.entity_type;
+        var classes = '.photowall';
         PhotoWall.init({
           classes: classes,
           el: el,  // Gallery element.

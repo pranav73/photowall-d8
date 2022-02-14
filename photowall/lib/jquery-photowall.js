@@ -28,7 +28,7 @@
  * Avoid jQuery conflict.
  */
 jQuery.noConflict();
-if (typeof(window.$) === 'undefined') {
+if (typeof (window.$) === 'undefined') {
   window.$ = jQuery;
 }
 /**
@@ -219,9 +219,9 @@ var PhotoWall = {
         Create line of images and add it to container body.
     */
     var showLine = function(line, total_width, last, first) {
+      var num_photos = line.length;
       var ln = $("<div class='pw-line' style='width:" + (total_width + num_photos * PhotoWall.options.padding * 2) + "'></div>")
         .appendTo(PhotoWall._el);
-      var num_photos = line.length;
       var space = (first) ? (PhotoWall._c_width * PhotoWall.options.firstBigWidthPercent + PhotoWall.options.padding * 2) : 0;
       var hCoef = (PhotoWall._c_width - space - num_photos * PhotoWall.options.padding * 2) / total_width;
       if (last)
@@ -356,8 +356,9 @@ var PhotoWall = {
       menuBarContent: menuBar,
       onUpdate: update
     });
-    if (PhotoWall.options.showBoxSocial)
+    if (PhotoWall.options.showBoxSocial){
       PhotoWall._init_socials();
+    }
   },
   /*
       Initialize image zoom.
@@ -578,8 +579,9 @@ var ShowBox = {
   _prev: function() {
     var total = ShowBox._images[ShowBox._current].length;
     ShowBox._index -= 1;
-    if (ShowBox._index < 0)
+    if (ShowBox._index < 0){
       ShowBox._index = total - 1;
+    }
     ShowBox._changeImage(ShowBox._index);
   },
   _show: function(gal) {
@@ -647,7 +649,9 @@ var ShowBox = {
     ShowBox._onChangePhoto();
     ShowBox._index = ind;
     $('#showbox .showbox-img').remove();
-    ShowBox._th.removeClass('showbox-th-active');
+    if(ShowBox._th != null){
+      ShowBox._th.removeClass('showbox-th-active');
+    }
     ShowBox._th = $('#showbox .showbox-th').eq(ind).addClass('showbox-th-active');
     var img = $('<img class="showbox-img" style="display:none;"/>')
       .prependTo('#showbox .showbox-image').click(ShowBox._next);
