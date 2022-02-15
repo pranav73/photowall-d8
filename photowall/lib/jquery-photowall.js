@@ -104,7 +104,7 @@ var PhotoWall = {
     showBoxPadding: 2,
     showBoxSocial: true
   },
-  init: function(op) {
+  init: function (op) {
     PhotoWall.options = $.extend(PhotoWall.options, op);
     PhotoWall._el = op.el + ' .body';
     PhotoWall._c_width = $(PhotoWall._el).width() - getScrollBarWidth();
@@ -118,7 +118,7 @@ var PhotoWall = {
     var s = 'script';
     var d = document;
     var js, fjs = d.getElementsByTagName(s)[0],
-      load = function(url, id) {
+      load = function (url, id) {
         if (d.getElementById(id)) {
           return;
         }
@@ -131,13 +131,13 @@ var PhotoWall = {
     load('https://apis.google.com/js/plusone.js', 'gplus1js');
     load('https://platform.twitter.com/widgets.js', 'tweetjs');
   },
-  _setLineMaxHeightDynamic: function() {
+  _setLineMaxHeightDynamic: function () {
     if (PhotoWall.options.lineMaxHeightDynamic) {
       var fact = $(window).height() / PhotoWall.options.baseScreenHeight;
       PhotoWall.options.lineMaxHeight = (PhotoWall._line_max_height * fact >= 100) ? (PhotoWall._line_max_height * fact) : 100;
     }
   },
-  RESIZE: function() {
+  RESIZE: function () {
     var w = $(PhotoWall._el).width();
     var h = $(PhotoWall._el).height();
     PhotoWall._setLineMaxHeightDynamic();
@@ -154,7 +154,7 @@ var PhotoWall = {
     PhotoWall.show();
   },
   // Here we resize all photos to max line height and replace main data array.
-  load: function(data) {
+  load: function (data) {
     if (!PhotoWall.options.lineMaxHeightDynamic) {
       for (var i in data) {
         var fact = PhotoWall.options.lineMaxHeight / data[i].th.height;
@@ -166,10 +166,10 @@ var PhotoWall = {
     PhotoWall.show();
   },
   /* This method render images by lines to the container.
-	   If 'data' is set then images from 'data' will be appended to the container,
-	   else images from container will be replace by the images from the main array.
+     If 'data' is set then images from 'data' will be appended to the container,
+     else images from container will be replace by the images from the main array.
     */
-  show: function(data) {
+  show: function (data) {
     var imgArray = new Array();
     var line = [];
     var totalWidth = 0;
@@ -185,7 +185,7 @@ var PhotoWall = {
       line = PhotoWall._last_line[0];
       totalWidth = PhotoWall._last_line[1];
     }
-    var addImage = function(id, padding, w, h, big, th, cw, ch) {
+    var addImage = function (id, padding, w, h, big, th, cw, ch) {
       var img_pos = '';
       var crop = '';
       if (cw && ch) {
@@ -200,11 +200,11 @@ var PhotoWall = {
         'width="' + w + '" height="' + h + '" style="' + img_pos + '" /></a></div>'
       );
       if (isBrowserMsie()) {
-        t.find('img').hide().on("load", function() {
+        t.find('img').hide().on("load", function () {
           $(this).fadeIn(300);
         });
       } else {
-        t.find('img').css('opacity', 0).on("load", function() {
+        t.find('img').css('opacity', 0).on("load", function () {
           $(this).delay(Math.random() * (1000 - 300) + 300)
             .animate({
               "opacity": 1
@@ -218,7 +218,7 @@ var PhotoWall = {
     /*
         Create line of images and add it to container body.
     */
-    var showLine = function(line, total_width, last, first) {
+    var showLine = function (line, total_width, last, first) {
       var num_photos = line.length;
       var ln = $("<div class='pw-line' style='width:" + (total_width + num_photos * PhotoWall.options.padding * 2) + "'></div>")
         .appendTo(PhotoWall._el);
@@ -315,16 +315,16 @@ var PhotoWall = {
   /*
       Initialize GUI.
   */
-  initGUI: function() {
+  initGUI: function () {
     if (PhotoWall.options.zoom)
       PhotoWall.initZoom();
     if (PhotoWall.options.showBox)
-      PhotoWall.initShowBox();
+    PhotoWall.initShowBox();
   },
   /*
       Initialize ShowBox.
   */
-  initShowBox: function() {
+  initShowBox: function(pics) {
     var menuBar = '';
     var update = null;
     if (PhotoWall.options.showBoxSocial) {
@@ -355,7 +355,7 @@ var PhotoWall = {
       },
       menuBarContent: menuBar,
       onUpdate: update
-    });
+    },pics);
     if (PhotoWall.options.showBoxSocial){
       PhotoWall._init_socials();
     }
@@ -363,13 +363,13 @@ var PhotoWall = {
   /*
       Initialize image zoom.
   */
-  initZoom: function() {
-    $(document).on(PhotoWall.options.zoomAction, ".pw-zoom", function() {
+  initZoom: function () {
+    $(document).on(PhotoWall.options.zoomAction, ".pw-zoom", function () {
       var img = $(this);
       if (!parseInt(img.css('opacity'))) return;
       img.stop().addClass('pw-photo-hover');
       // Make images to zoom only after some time to prevent zoom on mouse move.
-      PhotoWall._zoom_timeout = setTimeout(function() {
+      PhotoWall._zoom_timeout = setTimeout(function () {
         img.removeClass('pw-photo-hover');
         img.addClass('pw-photo-zoomed');
         if (PhotoWall._zoom_timeout) {
@@ -379,7 +379,7 @@ var PhotoWall = {
           // Preload zoomed image and replace old only when it loaded.
           var bigIMG = $('<img/>');
           bigIMG.attr('src', item.th.zoom_src);
-          bigIMG.on("load", function() {
+          bigIMG.on("load", function () {
             img.attr('src', $(this).attr('src'));
             $(this).remove();
           });
@@ -426,7 +426,7 @@ var PhotoWall = {
         }
       }, PhotoWall.options.zoomTimeout);
     });
-    $(document).on('mouseleave', ".pw-zoom", function() {
+    $(document).on('mouseleave', ".pw-zoom", function () {
       var img = $(this);
       var container = img.parent().parent();
       var item = PhotoWall._photos[container.attr('id')];
@@ -449,7 +449,7 @@ var PhotoWall = {
   }
 }
 /*
-	ShowBox - Fullscreen image viewer that overlay on the current page.
+  ShowBox - Fullscreen image viewer that overlay on the current page.
 */
 var ShowBox = {
   version: "0.1.5",
@@ -461,18 +461,18 @@ var ShowBox = {
   _inited: false,
   _th: null,
   options: [],
-  init: function(el, op) {
+  init: function(el, op,pics) {
     var a = {
-      closeCallback: function() {},
+      closeCallback: function () { },
       menuBarContent: '',
       onUpdate: null
     };
     ShowBox.options.push($.extend(a, op));
-    ShowBox._init(el);
+    ShowBox._init(pics);
     ShowBox._initEvents(el);
     ShowBox._parseGet();
   },
-  _init: function(el) {
+  _init: function (pics) {
     ShowBox._images.push([]);
     if (ShowBox.options[ShowBox.options.length - 1].menuBarContent) {
       $('body').append(
@@ -499,19 +499,18 @@ var ShowBox = {
     $('body').append(
       '<div id="showbox-thc' + (ShowBox.options.length - 1) + '" style="overflow:hidden;width:100%;position:absolute;top:-999999px;"><div class="showbox-th-container clearfix"></div></div>'
     );
-    var i = 0;
+var index = 0;
     var lc = ShowBox._images.length - 1;
-    $(el).each(function() {
-      var t = $(this);
-      ShowBox._images[lc].push([t.attr('href'), t.find('img').attr('src')]);
-      ShowBox._addThumb(lc, ShowBox._images[lc][i][1], i);
-      i++;
-    });
+    for( i in pics){
+      ShowBox._images[lc].push([pics[i].img, pics[i].th.src]);
+      ShowBox._addThumb(lc, pics[i].img, index);
+      index++;
+    }
   },
-  _initEvents: function(el) {
+  _initEvents: function (el) {
     if (el) {
       var num = ShowBox._images.length - 1;
-      $(document).on('click', el, function(e) {
+      $(document).on('click', el, function (e) {
         e.preventDefault();
         ShowBox._opened = true;
         var gal = num;
@@ -529,33 +528,33 @@ var ShowBox = {
     }
     if (!ShowBox._inited) {
       ShowBox._inited = true;
-      $(document).keyup(function(e) {
+      $(document).keyup(function (e) {
         if (!ShowBox._opened) return;
         ShowBox.KEYPRESSED(e);
       });
-      $('#showbox-exit').click(function() {
+      $('#showbox-exit').click(function () {
         if (!ShowBox._opened) return;
         ShowBox.EXIT(this);
       });
-      $('#showbox .showbox-preview').mouseenter(function() {
+      $('#showbox .showbox-preview').mouseenter(function () {
         if (ShowBox._preview_locked) return;
         ShowBox.OPENPREVIEW(this);
       });
-      $('#showbox .showbox-preview').mouseleave(function() {
+      $('#showbox .showbox-preview').mouseleave(function () {
         if (!ShowBox._opened) return;
         if (ShowBox._preview_locked) return;
         ShowBox.CLOSEPREVIEW(this);
       });
-      $('#showbox .showbox-preview').click(function() {
+      $('#showbox .showbox-preview').click(function () {
         if (!ShowBox._opened) return;
         ShowBox.LOCKPREVIEW(this);
       });
-      $(window).resize(function() {
+      $(window).resize(function () {
         ShowBox.RESIZE(this);
       });
     }
   },
-  _parseGet: function() {
+  _parseGet: function () {
     var get = $_GET();
     if (get['p'] && get['gal']) {
       ShowBox._opened = true;
@@ -569,22 +568,22 @@ var ShowBox = {
       ShowBox._show(gal);
     }
   },
-  _next: function() {
+  _next: function () {
     var total = ShowBox._images[ShowBox._current].length;
     ShowBox._index += 1;
     if (ShowBox._index >= total)
       ShowBox._index = 0;
     ShowBox._changeImage(ShowBox._index);
   },
-  _prev: function() {
+  _prev: function () {
     var total = ShowBox._images[ShowBox._current].length;
     ShowBox._index -= 1;
-    if (ShowBox._index < 0){
+    if (ShowBox._index < 0) {
       ShowBox._index = total - 1;
     }
     ShowBox._changeImage(ShowBox._index);
   },
-  _show: function(gal) {
+  _show: function (gal) {
     var thc = $('#showbox-thc' + gal).detach();
     var mb = $('#showbox-menubar' + gal).detach();
     thc.appendTo('#showbox .showbox-preview');
@@ -599,13 +598,13 @@ var ShowBox = {
     });
     $('#showbox-loader').show();
     $('body').css('overflow', 'hidden');
-    $('#showbox').fadeIn(200, function() {
+    $('#showbox').fadeIn(200, function () {
       ShowBox._changeImage(ShowBox._index);
     });
   },
-  _addThumb: function(gal, im, i) {
+  _addThumb: function (gal, im, i) {
     $('<div class="showbox-th"><img src="' + im + '" /></div>')
-      .appendTo('#showbox-thc' + gal + ' .showbox-th-container').find('img').on("load", function() {
+      .appendTo('#showbox-thc' + gal + ' .showbox-th-container').find('img').on("load", function () {
         var w = $(this).width();
         var h = $(this).height();
         var l = 0;
@@ -626,18 +625,18 @@ var ShowBox = {
           left: -l,
           top: -t
         });
-      }).parent().click(function(e) {
+      }).parent().click(function (e) {
         e.stopPropagation();
         var ind = i;
         ShowBox._changeImage(ind);
       });
   },
-  _onChangePhoto: function() {
-    if (typeof(ShowBox.options[ShowBox._current].onUpdate) == 'function') {
+  _onChangePhoto: function () {
+    if (typeof (ShowBox.options[ShowBox._current].onUpdate) == 'function') {
       ShowBox.options[ShowBox._current].onUpdate();
     }
   },
-  _changeImage: function(ind) {
+  _changeImage: function (ind) {
     $('#showbox-loader').show();
     $('#showbox .showbox-menubar').hide();
     $('#showbox .showbox-menubar').html('');
@@ -649,14 +648,14 @@ var ShowBox = {
     ShowBox._onChangePhoto();
     ShowBox._index = ind;
     $('#showbox .showbox-img').remove();
-    if(ShowBox._th != null){
+    if (ShowBox._th != null) {
       ShowBox._th.removeClass('showbox-th-active');
     }
     ShowBox._th = $('#showbox .showbox-th').eq(ind).addClass('showbox-th-active');
     var img = $('<img class="showbox-img" style="display:none;"/>')
       .prependTo('#showbox .showbox-image').click(ShowBox._next);
     img.attr('src', ShowBox._images[ShowBox._current][ind][0])
-      .on("load", function() {
+      .on("load", function () {
         var iW = $(this).width();
         var iH = $(this).height();
         $(this).attr({
@@ -668,16 +667,16 @@ var ShowBox = {
         ShowBox.RESIZE();
       });
   },
-  _setCounter: function(num, total) {
+  _setCounter: function (num, total) {
     $('#showbox .showbox-th-counter').html(num + ' of ' + total);
   },
-  _clearHash: function() {
+  _clearHash: function () {
     window.location.hash = '_';
   },
-  opened: function() {
+  opened: function () {
     return ShowBox._opened;
   },
-  EXIT: function(el) {
+  EXIT: function () {
     ShowBox._clearHash();
     ShowBox._opened = false;
     $('body').css('overflow', 'auto');
@@ -694,7 +693,7 @@ var ShowBox = {
       top: '-10000px'
     }).detach().appendTo('body');
   },
-  KEYPRESSED: function(e) {
+  KEYPRESSED: function (e) {
     if (e.keyCode == 27) {
       ShowBox.EXIT();
     }
@@ -705,7 +704,7 @@ var ShowBox = {
       ShowBox._prev();
     }
   },
-  OPENPREVIEW: function(el) {
+  OPENPREVIEW: function (el) {
     $(el).animate({
       bottom: 0
     }, {
@@ -713,7 +712,7 @@ var ShowBox = {
       duration: 150
     });
   },
-  CLOSEPREVIEW: function(el) {
+  CLOSEPREVIEW: function (el) {
     $(el).animate({
       bottom: -75
     }, {
@@ -721,7 +720,7 @@ var ShowBox = {
       duration: 150
     });
   },
-  LOCKPREVIEW: function(el) {
+  LOCKPREVIEW: function (el) {
     ShowBox._preview_locked = ShowBox._preview_locked ? false : true;
     if (ShowBox._preview_locked) {
       $('#showbox .showbox-pv-lock').show();
@@ -737,7 +736,7 @@ var ShowBox = {
       });
     }
   },
-  RESIZE: function(el) {
+  RESIZE: function (el) {
     if (!ShowBox._opened) return;
     var showbox = $('#showbox');
     var img = $('#showbox .showbox-image img');

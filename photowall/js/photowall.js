@@ -46,6 +46,7 @@
         });
         PhotoWall.load(photowallSettings);
       });
+      PhotoWall.initShowBox(drupalSettings.photowallImages);
     }
   }
 })(jQuery, Drupal, drupalSettings);

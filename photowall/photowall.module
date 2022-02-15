@@ -5,8 +5,9 @@
  * Provides image formatter for Google like photowall effect.
  */
 
-use Drupal\Core\Url;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\ViewExecutable;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_help().
@@ -15,16 +16,15 @@ function photowall_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the imagefield slideshow module.
     case 'help.page.photowall':
-      $output = '';
-      $output .= '<h3>' . 'About' . '</h3>';
-      $output .= '<p>' . 'Provides a <em>Photowall</em> format for displaying <em>Image</em> or <em>Media</em> field, using JQuery <a href="https://github.com/tanmayk/jquery-photowall">Photowall</a> plugin.</p>';
-      $output .= '<h3>' . 'Usage' . '</h3>';
-      $output .= '<p>' . t('Create or edit a <a href=":content-type">content type</a> and include an <em>Image</em> field. Edit this image field to make it so that multiple image files may be added ("Number of values" setting at :content_type_setting).', [':content-type' => Url::fromRoute('entity.node_type.collection')->toString(), ':content_type_setting' => 'admin/structure/types/manage/{content type}/fields/{field_image/field_media}']) . '</p>';
-      $output .= '<p>' . 'Go to Manage display for your content type (/admin/structure/types/manage/{content type}/display) and switch the format of your multiple image/media field from Image to Photowall.' . '</p>';
-      $output .= '<p>' . 'Click the settings wheel in the slideshow-formatted multiple image field to edit advanced settings.' . '</p>';
-      $output .= '<p>' . 'Save! and here you go.' . '</p>';
-      $output .= '<h3>' . 'Available option' . '</h3>';
-      $output .= '<p>' . '<strong>Zoom factor:</strong> Set zoom factor between 1.3 to 1.6 for better results.' . '</p>';
+      $output  = '<h3>About</h3>';
+      $output .= '<p>Provides a <em>Photowall</em> format for displaying <em>Image</em> or <em>Media</em> field, using JQuery <a href="https://github.com/tanmayk/jquery-photowall">Photowall</a> plugin.</p>';
+      $output .= '<h3>Usage</h3>';
+      $output .= '<p>Create or edit a <a href="/admin/structure/types">content type</a> and include an <em>Image</em> field. Edit this image field to make it so that multiple image files may be added ("Number of values" setting at :content_type_setting).</p>';
+      $output .= '<p>Go to Manage display for your content type (/admin/structure/types/manage/{content type}/display) and switch the format of your multiple image/media field from Image to Photowall.</p>';
+      $output .= '<p>Click the settings wheel in the slideshow-formatted multiple image field to edit advanced settings.</p>';
+      $output .= '<p>Save! and here you go.</p>';
+      $output .= '<h3>Available option</h3>';
+      $output .= '<p><strong>Zoom factor:</strong> Set zoom factor between 1.3 to 1.6 for better results.</p>';
       return $output;
   }
 }
@@ -44,4 +44,42 @@ function photowall_theme() {
       'render element' => 'element',
     ],
   ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function photowall_views_pre_render(ViewExecutable $view) {
+  $photowall = [];
+  $i = 1;
+  foreach ($view->result as $item) {
+    // Generate ids.
+    $id = 'photowall-' . $i++;
+    // Get image path.
+    $file = File::load($item->nid);
+    if (!empty($file)) {
+      $image['path'] = file_create_url($file->getFileUri());
+    }
+    // Specify width & height.
+    $image['width'] = $item->_entity->get('field_image')->width;
+    $image['height'] = $item->_entity->get('field_image')->height;
+
+    // The height and width will be adjusted by photowall plugin itself.
+    $photowall[$id] = [
+      'id' => $id,
+      // Source image for Showbox.
+      'img' => $image['path'],
+      'width' => $image['width'],
+      'height' => $image['height'],
+      'th' => [
+        // Source image for Photowall thumbnails.
+        'src' => $image['path'],
+        'width' => trim($image['width'], ""),
+        'height' => trim($image['height'], ""),
+        'zoom_src' => '',
+        'zoom_factor' => '1.5',
+      ],
+    ];
+  }
+  $view->element['#attached']['drupalSettings']['photowallImages'] = $photowall;
 }
