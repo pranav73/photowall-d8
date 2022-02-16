@@ -51,6 +51,7 @@ function photowall_theme() {
  */
 function photowall_views_pre_render(ViewExecutable $view) {
   $photowall = [];
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable('photowall.settings');
   $i = 1;
   foreach ($view->result as $item) {
     // Generate ids.
@@ -77,7 +78,7 @@ function photowall_views_pre_render(ViewExecutable $view) {
         'width' => trim($image['width'], ""),
         'height' => trim($image['height'], ""),
         'zoom_src' => '',
-        'zoom_factor' => '1.5',
+        'zoom_factor' => $config->get('zoom_factor'),
       ],
     ];
   }

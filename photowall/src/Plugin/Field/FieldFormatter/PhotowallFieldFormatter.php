@@ -11,6 +11,7 @@ use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\file\Entity\File;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Plugin implementation of the 'photowall_field_formatter' formatter.
@@ -33,6 +34,13 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
   protected $imageStyleStorage;
 
   /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * Constructs an ImageFormatter object.
    *
    * @param string $plugin_id
@@ -51,9 +59,12 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
    *   The current user.
    * @param \Drupal\Core\Entity\EntityStorageInterface $image_style_storage
    *   The image style.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $image_style_storage) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityStorageInterface $image_style_storage, ConfigFactoryInterface $config_factory) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->configFactory = $config_factory;
     $this->imageStyleStorage = $image_style_storage;
   }
 
@@ -70,7 +81,8 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
       $configuration['view_mode'],
       $configuration['third_party_settings'],
     // Added.
-      $container->get('entity_type.manager')->getStorage('user')
+      $container->get('entity_type.manager')->getStorage('user'),
+      $container->get('config.factory')
     );
   }
 
@@ -125,7 +137,11 @@ class PhotowallFieldFormatter extends ImageFormatterBase implements ContainerFac
       return $elements;
     }
 
+    $config = $this->configFactory->getEditable('photowall.settings');
     $zoom_factor = $this->getSetting('zoom_factor');
+
+    // Set `zoom_factor` in configurations.
+    $config->set('zoom_factor', $zoom_factor)->save();
     if (!isset($zoom_factor)) {
       $zoom_factor = '1.5';
     }
