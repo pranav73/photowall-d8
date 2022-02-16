@@ -319,20 +319,20 @@ var PhotoWall = {
     if (PhotoWall.options.zoom)
       PhotoWall.initZoom();
     if (PhotoWall.options.showBox)
-    PhotoWall.initShowBox();
+      PhotoWall.initShowBox();
   },
   /*
       Initialize ShowBox.
   */
-  initShowBox: function(pics) {
+  initShowBox: function (pics) {
     var menuBar = '';
     var update = null;
     if (PhotoWall.options.showBoxSocial) {
       menuBar = '<div style="padding-top: 5px;width: 250px;position: relative;left: 50%;margin-left: -125px;"><div style="float:left;margin-top: 5px;width:80px;"><div id="gplus" class="g-plusone" data-size="medium"></div></div><div style="float:left;margin-top:5px;width:90px;"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div><div style="float:left;margin-top:5px;width:80px;" id="fblike"><fb:like send="false" layout="button_count" width="100" show_faces="false"></fb:like></div></div>';
-      update = function() {
-        if (typeof(FB) !== 'undefined')
+      update = function () {
+        if (typeof (FB) !== 'undefined')
           FB.XFBML.parse(document.getElementById('fblike'));
-        if (typeof(gapi) !== 'undefined') {
+        if (typeof (gapi) !== 'undefined') {
           gapi.plusone.render(document.getElementById('gplus'), {
             'href': location.href,
             'annotation': 'bubble',
@@ -341,22 +341,22 @@ var PhotoWall = {
             'size': 'medium'
           });
         }
-        if (typeof(twttr) !== 'undefined') {
+        if (typeof (twttr) !== 'undefined') {
           $('#showbox .twitter-share-button').attr('data-url', location.href);
           twttr.widgets.load();
         }
       };
     }
     ShowBox.init(PhotoWall.options.classes + ' a.pw-link', {
-      closeCallback: function() {
+      closeCallback: function () {
         if (PhotoWall._must_resize) {
           PhotoWall.RESIZE();
         }
       },
       menuBarContent: menuBar,
       onUpdate: update
-    },pics);
-    if (PhotoWall.options.showBoxSocial){
+    }, pics);
+    if (PhotoWall.options.showBoxSocial) {
       PhotoWall._init_socials();
     }
   },
@@ -461,7 +461,7 @@ var ShowBox = {
   _inited: false,
   _th: null,
   options: [],
-  init: function(el, op,pics) {
+  init: function (el, op, pics) {
     var a = {
       closeCallback: function () { },
       menuBarContent: '',
@@ -497,13 +497,13 @@ var ShowBox = {
       ).appendTo('body');
     }
     $('body').append(
-      '<div id="showbox-thc' + (ShowBox.options.length - 1) + '" style="overflow:hidden;width:100%;position:absolute;top:-999999px;"><div class="showbox-th-container clearfix"></div></div>'
+      '<div id="showbox-thc' + (ShowBox.options.length + 4) + '" style="overflow:hidden;width:100%;position:absolute;top:-999999px;"><div class="showbox-th-container clearfix"></div></div>'
     );
-var index = 0;
+    var index = 0;
     var lc = ShowBox._images.length - 1;
-    for( i in pics){
+    for (i in pics) {
       ShowBox._images[lc].push([pics[i].img, pics[i].th.src]);
-      ShowBox._addThumb(lc, pics[i].img, index);
+      ShowBox._addThumb(lc, ShowBox._images[lc][index][0], index);
       index++;
     }
   },
