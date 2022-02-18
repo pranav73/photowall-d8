@@ -497,7 +497,7 @@ var ShowBox = {
       ).appendTo('body');
     }
     $('body').append(
-      '<div id="showbox-thc' + (ShowBox.options.length + 4) + '" style="overflow:hidden;width:100%;position:absolute;top:-999999px;"><div class="showbox-th-container clearfix"></div></div>'
+      '<div id="showbox-thc1" style="overflow:hidden;width:100%;position:absolute;top:-999999px;"><div class="showbox-th-container clearfix"></div></div>'
     );
     var index = 0;
     var lc = ShowBox._images.length - 1;
@@ -684,7 +684,7 @@ var ShowBox = {
     ShowBox.options[ShowBox._current].closeCallback();
     $('#showbox .showbox-menubar').hide();
     $('#showbox .showbox-image img').remove();
-    $('#showbox-thc' + ShowBox._current).css({
+    $('#showbox-thc1').css({
       position: 'absolute',
       top: '-10000px'
     }).detach().appendTo('body');

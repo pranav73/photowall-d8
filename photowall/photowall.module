@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\views\ViewExecutable;
+use Drupal\node\Entity\Node;
 use Drupal\file\Entity\File;
 
 /**
@@ -57,13 +58,14 @@ function photowall_views_pre_render(ViewExecutable $view) {
     // Generate ids.
     $id = 'photowall-' . $i++;
     // Get image path.
-    $file = File::load($item->nid);
+    $node = Node::load($item->nid);
+    $file = File::load($node->field_image->target_id);
     if (!empty($file)) {
-      $image['path'] = file_create_url($file->getFileUri());
+      $image['path'] = $file->createFileUrl(FALSE);
     }
     // Specify width & height.
-    $image['width'] = $item->_entity->get('field_image')->width;
-    $image['height'] = $item->_entity->get('field_image')->height;
+    $image['width'] =$node->get('field_image')->width;
+    $image['height'] =$node->get('field_image')->height;
 
     // The height and width will be adjusted by photowall plugin itself.
     $photowall[$id] = [

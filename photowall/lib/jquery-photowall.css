@@ -130,9 +130,8 @@ img.pw-photo-zoomed {
 }
 
 .showbox-th {
-  position: relative;
-  width: 58px;
-  height: 58px;
+  width: 100px;
+  height: 65px;
   overflow: hidden;
   float: left;
   margin: 2px;
@@ -141,7 +140,9 @@ img.pw-photo-zoomed {
 }
 
 #showbox .showbox-th img {
-  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 #showbox .showbox-th-active {
