@@ -54,35 +54,40 @@ function photowall_views_pre_render(ViewExecutable $view) {
   $photowall = [];
   $config = \Drupal::getContainer()->get('config.factory')->getEditable('photowall.settings');
   $i = 1;
+  $item = [];
+  $image = [];
   foreach ($view->result as $item) {
-    // Generate ids.
-    $id = 'photowall-' . $i++;
-    // Get image path.
-    $node = Node::load($item->nid);
-    $file = File::load($node->field_image->target_id);
-    if (!empty($file)) {
-      $image['path'] = $file->createFileUrl(FALSE);
-    }
-    // Specify width & height.
-    $image['width'] =$node->get('field_image')->width;
-    $image['height'] =$node->get('field_image')->height;
-
-    // The height and width will be adjusted by photowall plugin itself.
-    $photowall[$id] = [
-      'id' => $id,
+    if (!empty($item->_entity)) {
+      // Generate ids.
+      $id = 'photowall-' . $i++;
+      // Get image path.
+      $node = Node::load($item->nid);
+      $file = File::load($node->field_image->target_id);
+      if (!empty($file)) {
+        $image['path'] = $file->createFileUrl(FALSE);
+      }
+      if (!empty($node)) {
+        // Specify width & height.
+        $image['width'] = $node->get('field_image')->width;
+        $image['height'] = $node->get('field_image')->height;
+      }
+      // The height and width will be adjusted by photowall plugin itself.
+      $photowall[$id] = [
+        'id' => $id,
       // Source image for Showbox.
-      'img' => $image['path'],
-      'width' => $image['width'],
-      'height' => $image['height'],
-      'th' => [
+        'img' => $image['path'],
+        'width' => $image['width'],
+        'height' => $image['height'],
+        'th' => [
         // Source image for Photowall thumbnails.
-        'src' => $image['path'],
-        'width' => trim($image['width'], ""),
-        'height' => trim($image['height'], ""),
-        'zoom_src' => '',
-        'zoom_factor' => $config->get('zoom_factor'),
-      ],
-    ];
+          'src' => $image['path'],
+          'width' => trim($image['width'], ""),
+          'height' => trim($image['height'], ""),
+          'zoom_src' => '',
+          'zoom_factor' => $config->get('zoom_factor'),
+        ],
+      ];
+    }
+    $view->element['#attached']['drupalSettings']['photowallImages'] = $photowall;
   }
-  $view->element['#attached']['drupalSettings']['photowallImages'] = $photowall;
 }
