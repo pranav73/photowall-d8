@@ -54,19 +54,24 @@ function photowall_views_pre_render(ViewExecutable $view) {
   $photowall = [];
   $config = \Drupal::getContainer()->get('config.factory')->getEditable('photowall.settings');
   $i = 1;
-  $item = [];
-  $image = [];
+  $image = [
+    "path" => "",
+    "width" => "",
+    "height" => "",
+  ];
   foreach ($view->result as $item) {
     if (!empty($item->_entity)) {
       // Generate ids.
       $id = 'photowall-' . $i++;
       // Get image path.
       $node = Node::load($item->nid);
-      $file = File::load($node->field_image->target_id);
+      if ($node->hasField('field_image')) {
+        $file = File::load($node->get('field_image')->target_id);
+      }
       if (!empty($file)) {
         $image['path'] = $file->createFileUrl(FALSE);
       }
-      if (!empty($node)) {
+      if ($node->hasField('field_image')) {
         // Specify width & height.
         $image['width'] = $node->get('field_image')->width;
         $image['height'] = $node->get('field_image')->height;
